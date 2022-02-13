@@ -1,0 +1,2 @@
+class BankTransactionDetector(object):
+    pass
