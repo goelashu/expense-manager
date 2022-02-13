@@ -41,10 +41,6 @@ def get_dataframe(sms_list):
 
 sms_list = get_sms_list()
 sms_df = get_dataframe(sms_list)
-# match = sms_df.apply(regex_match, axis=1)
-# sms_df = sms_df[match]
-# sms_df = sms_df.sort_values(by=['timestamp'], ascending=False)
-# print(sms_df.head(20)['body'])
 
 from extractors.amount_extractor import AmountExtractor
 from extractors.src_extractor import SourceExtractor
@@ -59,13 +55,9 @@ for sms in sms_list:
     amount  = AmountExtractor.extract_amount(sms.body)
     if amount and not is_false_positive(sms):
         src = src_extractor.extract_source(sms)
-    # if 'ambeysales' in sms.body and 'Call' not in sms.body:
-    #     # src = src_extractor.extract_source(sms)
-    #     print(sms.body)
-    #     print(amount)
-    #     print(src)
+
     if amount and not is_false_positive(sms) and src:
-        if src[1] == 'hdfc':# and 'Rs 138.00 debited from a/c **4723 on 22-01-22 to VPA swiggystores@icici(UPI Ref No 202230217377). Not you? Call on 18002586161 to report' in sms.body:
+        if src[1] == 'hdfc':
             dest = dest_extractor.extract_destination(sms)
             print(sms.address, sms.body)
             print('amount extracted is :',amount)
